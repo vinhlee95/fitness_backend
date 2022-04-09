@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --config ./jest.config.js",
     "lint": "tsc --noEmit",
-    "dev:watch": "ts-node-dev --transpile-only --respawn --files src/index.ts",
+    "dev:watch": "ts-node-dev --poll --watch src src/index.ts",
     "start": "node build/index.js",
     "build": "tsc"
   },

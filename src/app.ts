@@ -9,6 +9,7 @@ export const currentUserRouter: RequestHandler = (req, res) => {
 export const createServer = () => {
   const app: Express = express();
   
+  app.use('/api', (req, res) => res.status(200).send('Hello World!'))
   app.use('/api/currentUser', currentUserRouter)
 
   return app

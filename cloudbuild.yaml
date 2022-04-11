@@ -6,16 +6,20 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Run lint'
     args: ['run', 'eu.gcr.io/$PROJECT_ID/fitness-backend-dependencies:$SHORT_SHA', 'npm', 'run', 'lint']
-    waitFor: ['Build dependencies']
+    waitFor:
+      - 'Build dependencies'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Run unit tests from dependencies'
     args: ['run', 'eu.gcr.io/$PROJECT_ID/fitness-backend-dependencies:$SHORT_SHA', 'npm', 'run', 'test']
-    waitFor: ['Build dependencies']
+    waitFor:
+      - 'Run lint'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build production image'
     args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/fitness-backend:$SHORT_SHA', '.' ]
+    waitFor:
+      - 'Run unit tests from dependencies'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Push production image to Cloud registry'

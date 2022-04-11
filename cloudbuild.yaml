@@ -27,7 +27,5 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gcloud'
     id: 'Deploy to Cloud Run'
-    args:
-      - run deploy fitness-backend
-      - --image=eu.gcr.io/$PROJECT_ID/fitness-backend:$SHORT_SHA
-      - --region=${_REGION}
+    args: ['run', 'deploy', '${_CLOUD_RUN_SERVICE}', '--image', 'eu.gcr.io/$PROJECT_ID/fitness-backend:${SHORT_SHA}', '--region', '${_REGION}']
+

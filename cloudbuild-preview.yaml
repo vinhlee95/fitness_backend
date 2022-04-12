@@ -37,7 +37,7 @@ steps:
       ]
 
   - id: "link revision on pull request"
-    name: "gcr.io/${PROJECT_ID}/deployment-previews" # our custom builder
+    name: "eu.gcr.io/${PROJECT_ID}/deployment-previews" # our custom builder
     secretEnv: ["GITHUB_TOKEN"]
     args:
       [

@@ -17,6 +17,9 @@ steps:
         "eu.gcr.io/${PROJECT_ID}/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}",
       ]
 
+  # Deploy the image to be the latest revision of Cloud Run (NOT serve traffic yet)
+  # The revision URL e.g. https://pr-1---myservice.run.app is ONLY AVAILABLE in Cloud Build's logs
+  # So we need to link that URL back to the GitHub PR page in the next step
   - id: "deploy revision with tag"
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
@@ -33,12 +36,16 @@ steps:
         "eu.gcr.io/${PROJECT_ID}/${_SERVICE_NAME}:${_PR_NUMBER}-${SHORT_SHA}",
         "--tag",
         "pr-${_PR_NUMBER}",
+        # Do not use this latest revision to serve traffic
         "--no-traffic",
       ]
 
+  # The custom builder source code is in https://github.com/GoogleCloudPlatform/python-docs-samples/tree/main/run/deployment-previews
+  # We have to built in manually and push it to the project's repository before running this build step
   - id: "link revision on pull request"
     name: "eu.gcr.io/${PROJECT_ID}/deployment-previews" # our custom builder
     secretEnv: ["GITHUB_TOKEN"]
+    # The default command is python3 app/check_status.py in which check_status.py could be found in https://github.com/GoogleCloudPlatform/python-docs-samples/tree/main/run/deployment-previews
     args:
       [
         "set",

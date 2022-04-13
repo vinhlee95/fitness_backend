@@ -27,5 +27,36 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gcloud'
     id: 'Deploy to Cloud Run'
-    args: ['run', 'deploy', '${_CLOUD_RUN_SERVICE}', '--image', 'eu.gcr.io/$PROJECT_ID/fitness-backend:${SHORT_SHA}', '--region', '${_REGION}']
+    args: 
+      [
+        'run', 
+        'deploy', 
+        '${_CLOUD_RUN_SERVICE}', 
+        '--image', 
+        'eu.gcr.io/$PROJECT_ID/fitness-backend:${SHORT_SHA}', 
+        '--region', 
+        '${_REGION}'
+      ]
 
+  # Cleanup tags against closed pull requests
+  - id: "clean up old tag"
+    name: "gcr.io/${PROJECT_ID}/deployment-previews" # our custom builder
+    secretEnv: ["GITHUB_TOKEN"]
+    waitFor:
+      - Deploy to Cloud Run
+    args:
+      [
+        "cleanup",
+        "--project-id",
+        "${PROJECT_ID}",
+        "--region",
+        "${_REGION}",
+        "--service",
+        "${_SERVICE_NAME}",
+        "--repo-name",
+        "${_GITHUB_OWNER}/${REPO_NAME}",
+      ]
+
+substitutions:
+  _SERVICE_NAME: fitnessbackend
+  _GITHUB_OWNER: $(push.repository.owner.name)

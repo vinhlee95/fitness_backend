@@ -38,6 +38,22 @@ steps:
         '${_REGION}'
       ]
 
+  # Force the new revision to serve 100% of traffic.
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: "Ensure prod service live"
+    args:
+      [
+        "run",
+        "services",
+        "update-traffic",
+        "${_SERVICE_NAME}",
+        "--to-latest",
+        "--platform",
+        "managed",
+        "--region",
+        "${_REGION}",
+      ]
+
   # Cleanup tags against closed pull requests
   - id: "clean up old tag"
     name: "gcr.io/${PROJECT_ID}/deployment-previews" # our custom builder

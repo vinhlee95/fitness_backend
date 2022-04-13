@@ -60,3 +60,8 @@ steps:
 substitutions:
   _SERVICE_NAME: fitnessbackend
   _GITHUB_OWNER: $(push.repository.owner.name)
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/github_token/versions/latest
+      env: "GITHUB_TOKEN"

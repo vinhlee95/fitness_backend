@@ -59,7 +59,7 @@ steps:
     name: "eu.gcr.io/${PROJECT_ID}/deployment-previews" # our custom builder
     secretEnv: ["GITHUB_TOKEN"]
     waitFor:
-      - Deploy to Cloud Run
+      - Ensure prod service live
     args:
       [
         "cleanup",

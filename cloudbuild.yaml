@@ -56,7 +56,7 @@ steps:
 
   # Cleanup tags against closed pull requests
   - id: "clean up old tag"
-    name: "gcr.io/${PROJECT_ID}/deployment-previews" # our custom builder
+    name: "eu.gcr.io/${PROJECT_ID}/deployment-previews" # our custom builder
     secretEnv: ["GITHUB_TOKEN"]
     waitFor:
       - Deploy to Cloud Run

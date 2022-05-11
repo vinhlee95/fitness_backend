@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fitness-backend-ingress
+  labels:
+    app: fitness-backend
+spec:
+  defaultBackend:
+    service:
+      name: fitness-backend-service
+      port:
+        number: 80

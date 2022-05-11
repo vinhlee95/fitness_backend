@@ -12,11 +12,16 @@ const superUserRouter: RequestHandler = (req, res) => {
   })
 }
 
+const healthCheckHandler: RequestHandler = (req, res) => {
+  res.status(200).json({ok: true})
+}
+
 export const createServer = () => {
   const app: Express = express();
   
   app.use('/api/currentUser', currentUserRouter)
   app.use('/api/superUser', superUserRouter)
+  app.use('/_health', healthCheckHandler)
 
   app.use('/api', (req, res) => res.status(200).send('Hello World!'))
 

@@ -3,7 +3,7 @@ kind: Config
 deploy:
   kustomize:
     paths:
-      - kubernetes
+      - kubernetes/base
 build:
   local:
     push: false

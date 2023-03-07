@@ -17,4 +17,20 @@ profiles:
       kustomize:
         paths:
           - kubernetes/base
+  - name: production
+    build:
+      local:
+        push: false
+      artifacts:
+        - image: vinhlee95/fitness-backend
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+              - src: 'src/**/*.ts'
+                dest: .
+    deploy:
+      kustomize:
+        paths:
+          - kubernetes/overlay/production
 

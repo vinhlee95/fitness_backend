@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: fitness-backend
-        image: vinhlee95/fitness-backend
+        image: vinhlee95/fitness-backend:latest
         resources:
           # the container is limited to 1 CPU and 256MiB of memory, 
           # and requires at least 0.5 CPUs and 128MiB of memory.

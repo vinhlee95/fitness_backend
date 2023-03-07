@@ -4,13 +4,7 @@ metadata:
   name: fitness-backend
 spec:
   replicas: 3
-  selector:
-    matchLabels:
-      app: fitness-backend
   template:
-    metadata:
-      labels:
-        app: fitness-backend
     spec:
       containers:
       - name: fitness-backend
@@ -24,9 +18,3 @@ spec:
           requests:
             cpu: "0.5"
             memory: "128Mi"
-        ports:
-          - containerPort: 3000
-        readinessProbe:
-          httpGet:
-            path: "/_health"
-            port: 3000

@@ -10,3 +10,5 @@ spec:
       name: fitness-backend-service
       port:
         number: 80
+  rules:
+  - host: domain.com

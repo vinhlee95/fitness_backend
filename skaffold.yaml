@@ -1,9 +1,5 @@
 apiVersion: skaffold/v2alpha3
 kind: Config
-deploy:
-  kubectl:
-    manifests:
-      - ./kubernetes/*
 build:
   local:
     push: false
@@ -15,3 +11,15 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+profiles:
+  - name: development
+    deploy:
+      kustomize:
+        paths:
+          - kubernetes/base
+  - name: production
+    deploy:
+      kustomize:
+        paths:
+          - kubernetes/overlay/production
+

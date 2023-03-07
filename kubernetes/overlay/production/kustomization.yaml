@@ -1,0 +1,17 @@
+namePrefix: production-
+commonLabels:
+  variant: production
+
+# Link to base kustomization.yaml
+bases:
+  - ../../base
+
+patches:
+  - path: deployment.yaml
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: production.domain.com
+    target:
+      kind: Ingress
+      name: ingress
